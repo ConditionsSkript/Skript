@@ -1,0 +1,22 @@
+on join:
+    if {ac::active::%player's uuid%} is not set:
+        set {ac::active::%player's uuid%} to "true"
+
+on break:
+    if {ac::active::%player's uuid%} is "true":
+        if player's inventory contains 64 wheat:
+            remove 64 wheat from player's inventory
+            give 1 yellow concrete powder named "&e&lCompressed Wheat" to player
+
+command /ac <text>:
+    aliases: /autocompress, /autocompressor
+    trigger:
+        if arg-1 is "on":
+            set {ac::active::%player's uuid%} to "true"
+            send "&aAutocompressor turned on!" to player
+        else if arg-1 is "off":
+            set {ac::active::%player's uuid%} to "false"
+            send "&cAutocompressor turned off!" to player
+
+on tab complete of "/ac":
+    set tab completions for position 1 to "on" and "off"
